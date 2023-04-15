@@ -1,6 +1,6 @@
 {
-    "name": "sengi-electron",
-    "version": "1.5.2",
+    "name": "sengi",
+    "version": "1.5.3",
     "license": "AGPL-3.0-or-later",
     "main": "main-electron.js",
     "description": "The Electron wrapper for Sengi",
