@@ -160,9 +160,9 @@ function createWindow() {
     }
 
     //open external links to browser
-    win.webContents.on("new-window", function (event, url) {
-        event.preventDefault();
+    win.webContents.setWindowOpenHandler(({ url }) => {
         shell.openExternal(url);
+        return { action: 'deny' };
     });
 
     // Emitted when the window is closed.
@@ -172,8 +172,7 @@ function createWindow() {
         // when you should delete the corresponding element.
         win = null;
     });
-
-
+    
     // win.webContents.on('context-menu', (event, params) => {
     //     const menu = new Menu();
 
