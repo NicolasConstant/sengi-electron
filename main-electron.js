@@ -7,6 +7,7 @@ const settings = require('electron-settings');
 let win;
 const globalAny = global;
 let language = settings.getSync('spellcheckLanguage') || 'en-US';
+let menuAutohide = settings.getSync('menuAutohide') || false;
 
 if (process.env.NODE_ENV !== 'development') {
     globalAny.__static = require('path').join(__dirname, '/assets/icons').replace(/\\/g, '\\\\');
@@ -67,8 +68,18 @@ function createWindow() {
         menu.popup()
     });
 
-    win.setAutoHideMenuBar(true);
-    win.setMenuBarVisibility(false);
+    function applyAutohideSettings() {
+
+        if (menuAutohide) {
+            win.setAutoHideMenuBar(true);
+            win.setMenuBarVisibility(false);
+        } else {
+            win.setAutoHideMenuBar(false);
+            win.setMenuBarVisibility(true);
+        }
+    }
+
+    applyAutohideSettings();
 
     const sengiUrl = "https://sengi.nicolas-constant.com";
     win.loadURL(sengiUrl);
@@ -93,6 +104,17 @@ function createWindow() {
                 { type: "separator" },
                 { role: "togglefullscreen" },
                 { type: "separator" },
+                {
+                    label: "Menu Autohide",
+                    type: 'checkbox',
+                    checked: menuAutohide,
+                    click: function () {
+                        menuAutohide = !menuAutohide;
+                        settings.set('menuAutohide', menuAutohide);
+                        applyAutohideSettings();
+                    }
+                },
+                { type: "separator" },
                 { role: "close" },
                 { role: "quit" }
             ]
@@ -104,7 +126,7 @@ function createWindow() {
                     label: "Off (need restart)",
                     type: 'radio',
                     checked: language === 'off',
-                    click: function () {                        
+                    click: function () {
                         settings.set('spellcheckLanguage', 'off');
                         language = 'off';
                     }
@@ -156,7 +178,7 @@ function createWindow() {
                     click: function () {
                         setSpellCheckLanguage('cs');
                     }
-                },               
+                },
                 {
                     label: "Danish",
                     type: 'radio',
@@ -172,7 +194,7 @@ function createWindow() {
                     click: function () {
                         setSpellCheckLanguage('nl');
                     }
-                },       
+                },
                 {
                     label: "English",
                     type: 'radio',
@@ -231,7 +253,7 @@ function createWindow() {
                     click: function () {
                         setSpellCheckLanguage('hi');
                     }
-                },               
+                },
                 {
                     label: "Hungarian",
                     type: 'radio',
@@ -279,7 +301,7 @@ function createWindow() {
                     click: function () {
                         setSpellCheckLanguage('lt');
                     }
-                },              
+                },
                 {
                     label: "Norwegian",
                     type: 'radio',
@@ -311,7 +333,7 @@ function createWindow() {
                     click: function () {
                         setSpellCheckLanguage('pt');
                     }
-                },             
+                },
                 {
                     label: "Romanian",
                     type: 'radio',
@@ -343,7 +365,7 @@ function createWindow() {
                     click: function () {
                         setSpellCheckLanguage('sh');
                     }
-                },              
+                },
                 {
                     label: "Slovak",
                     type: 'radio',
@@ -407,7 +429,7 @@ function createWindow() {
                     click: function () {
                         setSpellCheckLanguage('vi');
                     }
-                }        
+                }
             ]
         },
         {
