@@ -445,6 +445,14 @@ function createWindow() {
                     }
                 }
             ]
+        }, 
+        {
+            label: "Patreon",
+            click: function(){
+                require("electron").shell.openExternal(
+                    "https://patreon.com/nicolasconstant"
+                );
+            }
         }
     ];
 
