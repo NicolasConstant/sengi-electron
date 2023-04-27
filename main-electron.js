@@ -132,14 +132,6 @@ function createWindow() {
                     }
                 },
                 {
-                    label: "Afrikaans",
-                    type: 'radio',
-                    checked: language === 'af',
-                    click: function () {
-                        setSpellCheckLanguage('af');
-                    }
-                },
-                {
                     label: "Albanian",
                     type: 'radio',
                     checked: language === 'sq',
