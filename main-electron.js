@@ -118,11 +118,35 @@ function createWindow() {
                     }
                 },
                 {
+                    label: "Albanian",
+                    type: 'radio',
+                    checked: language === 'sq',
+                    click: function () {
+                        setSpellCheckLanguage('sq');
+                    }
+                },
+                {
+                    label: "Armenian",
+                    type: 'radio',
+                    checked: language === 'hy',
+                    click: function () {
+                        setSpellCheckLanguage('hy');
+                    }
+                },
+                {
                     label: "Bulgarian",
                     type: 'radio',
                     checked: language === 'bg',
                     click: function () {
                         setSpellCheckLanguage('bg');
+                    }
+                },
+                {
+                    label: "Croatian",
+                    type: 'radio',
+                    checked: language === 'hr',
+                    click: function () {
+                        setSpellCheckLanguage('hr');
                     }
                 },
                 {
@@ -132,13 +156,48 @@ function createWindow() {
                     click: function () {
                         setSpellCheckLanguage('cs');
                     }
-                },
+                },               
                 {
                     label: "Danish",
                     type: 'radio',
                     checked: language === 'da',
                     click: function () {
                         setSpellCheckLanguage('da');
+                    }
+                },
+                {
+                    label: "Dutch",
+                    type: 'radio',
+                    checked: language === 'nl',
+                    click: function () {
+                        setSpellCheckLanguage('nl');
+                    }
+                },       
+                {
+                    label: "English",
+                    type: 'radio',
+                    checked: language === 'en-US',
+                    click: function () {
+                        setSpellCheckLanguage('en-US');
+
+                        // const possibleLanguages = win.webContents.session.availableSpellCheckerLanguages;
+                        // console.warn(possibleLanguages);
+                    }
+                },
+                {
+                    label: "Estonian",
+                    type: 'radio',
+                    checked: language === 'et',
+                    click: function () {
+                        setSpellCheckLanguage('et');
+                    }
+                },
+                {
+                    label: "French",
+                    type: 'radio',
+                    checked: language === 'fr-FR',
+                    click: function () {
+                        setSpellCheckLanguage('fr-FR');
                     }
                 },
                 {
@@ -158,49 +217,6 @@ function createWindow() {
                     }
                 },
                 {
-                    label: "English",
-                    type: 'radio',
-                    checked: language === 'en-US',
-                    click: function () {
-                        setSpellCheckLanguage('en-US');
-
-                        // const possibleLanguages = win.webContents.session.availableSpellCheckerLanguages;
-                        // console.warn(possibleLanguages);
-                    }
-                },
-                {
-                    label: "Spanish",
-                    type: 'radio',
-                    checked: language === 'es',
-                    click: function () {
-                        setSpellCheckLanguage('es');
-                    }
-                },
-                {
-                    label: "Estonian",
-                    type: 'radio',
-                    checked: language === 'et',
-                    click: function () {
-                        setSpellCheckLanguage('et');
-                    }
-                },
-                {
-                    label: "Persian",
-                    type: 'radio',
-                    checked: language === 'fa',
-                    click: function () {
-                        setSpellCheckLanguage('fa');
-                    }
-                },
-                {
-                    label: "French",
-                    type: 'radio',
-                    checked: language === 'fr-FR',
-                    click: function () {
-                        setSpellCheckLanguage('fr-FR');
-                    }
-                },
-                {
                     label: "Hebrew",
                     type: 'radio',
                     checked: language === 'he',
@@ -215,29 +231,13 @@ function createWindow() {
                     click: function () {
                         setSpellCheckLanguage('hi');
                     }
-                },
-                {
-                    label: "Croatian",
-                    type: 'radio',
-                    checked: language === 'hr',
-                    click: function () {
-                        setSpellCheckLanguage('hr');
-                    }
-                },
+                },               
                 {
                     label: "Hungarian",
                     type: 'radio',
                     checked: language === 'hu',
                     click: function () {
                         setSpellCheckLanguage('hu');
-                    }
-                },
-                {
-                    label: "Armenian",
-                    type: 'radio',
-                    checked: language === 'hy',
-                    click: function () {
-                        setSpellCheckLanguage('hy');
                     }
                 },
                 {
@@ -265,14 +265,6 @@ function createWindow() {
                     }
                 },
                 {
-                    label: "Lithuanian",
-                    type: 'radio',
-                    checked: language === 'lt',
-                    click: function () {
-                        setSpellCheckLanguage('lt');
-                    }
-                },
-                {
                     label: "Latvian",
                     type: 'radio',
                     checked: language === 'lv',
@@ -280,6 +272,14 @@ function createWindow() {
                         setSpellCheckLanguage('lv');
                     }
                 },
+                {
+                    label: "Lithuanian",
+                    type: 'radio',
+                    checked: language === 'lt',
+                    click: function () {
+                        setSpellCheckLanguage('lt');
+                    }
+                },              
                 {
                     label: "Norwegian",
                     type: 'radio',
@@ -289,11 +289,11 @@ function createWindow() {
                     }
                 },
                 {
-                    label: "Dutch",
+                    label: "Persian",
                     type: 'radio',
-                    checked: language === 'nl',
+                    checked: language === 'fa',
                     click: function () {
-                        setSpellCheckLanguage('nl');
+                        setSpellCheckLanguage('fa');
                     }
                 },
                 {
@@ -311,7 +311,7 @@ function createWindow() {
                     click: function () {
                         setSpellCheckLanguage('pt');
                     }
-                },
+                },             
                 {
                     label: "Romanian",
                     type: 'radio',
@@ -329,13 +329,21 @@ function createWindow() {
                     }
                 },
                 {
+                    label: "Serbian",
+                    type: 'radio',
+                    checked: language === 'sr',
+                    click: function () {
+                        setSpellCheckLanguage('sr');
+                    }
+                },
+                {
                     label: "Serbo-Croatian",
                     type: 'radio',
                     checked: language === 'sh',
                     click: function () {
                         setSpellCheckLanguage('sh');
                     }
-                },
+                },              
                 {
                     label: "Slovak",
                     type: 'radio',
@@ -353,19 +361,11 @@ function createWindow() {
                     }
                 },
                 {
-                    label: "Albanian",
+                    label: "Spanish",
                     type: 'radio',
-                    checked: language === 'sq',
+                    checked: language === 'es',
                     click: function () {
-                        setSpellCheckLanguage('sq');
-                    }
-                },
-                {
-                    label: "Serbian",
-                    type: 'radio',
-                    checked: language === 'sr',
-                    click: function () {
-                        setSpellCheckLanguage('sr');
+                        setSpellCheckLanguage('es');
                     }
                 },
                 {
