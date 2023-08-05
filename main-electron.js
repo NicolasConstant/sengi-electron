@@ -102,8 +102,7 @@ function createWindow() {
 
     applyAutohideSettings();
 
-    //const sengiUrl = "https://sengi.nicolas-constant.com";
-    const sengiUrl = "https://ec18-107-159-22-16.ngrok-free.app";
+    const sengiUrl = "https://sengi.nicolas-constant.com";    
     win.loadURL(sengiUrl);
 
     const template = [
