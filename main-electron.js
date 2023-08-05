@@ -55,7 +55,7 @@ function createWindow() {
             nodeIntegration: false, // is default value after Electron v5
             contextIsolation: true, // protect against prototype pollution
             enableRemoteModule: false, // turn off remote
-            preload: join(__dirname, "preload.js") // use a preload script
+            preload: join(__dirname.replace('app.asar', ''), "preload.js") // use a preload script
         }
         // webPreferences: {
         //     contextIsolation: true,
