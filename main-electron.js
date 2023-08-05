@@ -52,6 +52,8 @@ function createWindow() {
         webPreferences: {
             spellcheck: language !== 'off',
             nodeIntegration: false, // is default value after Electron v5
+            nodeIntegrationInWorker: false,
+            nodeIntegrationInSubFrames: false,
             contextIsolation: true, // protect against prototype pollution
             enableRemoteModule: false, // turn off remote
             preload: join(__dirname.replace('app.asar', ''), "preload.js") // use a preload script
