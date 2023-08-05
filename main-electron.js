@@ -26,7 +26,7 @@ const supportedLangs = ['sq', 'hy', 'bg', 'hr', 'cs', 'da', 'nl', 'en', 'et', 'f
 
 function createWindow() {
     //https://stackoverflow.com/questions/44391448/electron-require-is-not-defined
-    ipcMain.on("toMain", (event, args) => {
+    ipcMain.on("changeSpellchecker", (event, args) => {
         if(args.length !== 2) return;
         if(language === 'off') return;
         if(!supportedLangs.includes(args)) return;
@@ -34,7 +34,6 @@ function createWindow() {
         setSpellCheckLanguage(args);
         menu.getMenuItemById(`lang-${args}`).checked = true;
     });
-
 
     // Set icon
     let icon = join(globalAny.__static, '/png/512x512.png');

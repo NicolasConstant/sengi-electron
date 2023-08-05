@@ -9,7 +9,7 @@ contextBridge.exposeInMainWorld(
     "api", {
         send: (channel, data) => {
             // whitelist channels
-            let validChannels = ["toMain"];
+            let validChannels = ["changeSpellchecker"];
             if (validChannels.includes(channel)) {
                 ipcRenderer.send(channel, data);
             }
