@@ -8,8 +8,6 @@ let win;
 const globalAny = global;
 let language = settings.getSync('spellcheckLanguage') || 'en';
 
-console.warn(`=====> LANG: ${language}`);
-
 let menuAutohide = settings.getSync('menuAutohide') || false;
 
 if (process.env.NODE_ENV !== 'development') {
@@ -29,9 +27,6 @@ const supportedLangs = ['sq', 'hy', 'bg', 'hr', 'cs', 'da', 'nl', 'en', 'et', 'f
 function createWindow() {
     //https://stackoverflow.com/questions/44391448/electron-require-is-not-defined
     ipcMain.on("toMain", (event, args) => {
-        console.warn('toMain');
-        console.warn(args);
-
         if(args.length !== 2) return;
         if(language === 'off') return;
         if(!supportedLangs.includes(args)) return;
