@@ -6,7 +6,7 @@ const settings = require('electron-settings');
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 const globalAny = global;
-let language = settings.getSync('spellcheckLanguage') || 'en-US';
+let language = settings.getSync('spellcheckLanguage') || 'en';
 
 console.warn(`=====> LANG: ${language}`);
 
@@ -24,36 +24,20 @@ function setSpellCheckLanguage(lang) {
 
 let menu;
 
-function createWindow() {
-    ipcMain.on('ping', (event, order) => {
-        console.warn('PING');
-        console.warn(event);
-        console.warn(order);
-    });
+const supportedLangs = ['sq', 'hy', 'bg', 'hr', 'cs', 'da', 'nl', 'en', 'et', 'fr', 'de', 'el', 'he', 'hi', 'hu', 'id', 'it', 'ko', 'lv', 'lt', 'nb', 'fa', 'pl', 'pt', 'ro', 'ru', 'sr', 'sh', 'sk', 'sl', 'es', 'sv', 'ta', 'tr', 'uk', 'vi'];
 
+function createWindow() {
+    //https://stackoverflow.com/questions/44391448/electron-require-is-not-defined
     ipcMain.on("toMain", (event, args) => {
         console.warn('toMain');
         console.warn(args);
 
-        //menu.getApplicationMenu().getMenuItemById('lang-fr-FR').enabled = true;
+        if(args.length !== 2) return;
+        if(language === 'off') return;
+        if(!supportedLangs.includes(args)) return;
+
         setSpellCheckLanguage(args);
-        menu.getMenuItemById('lang-fr-FR').enabled = true;
-
-        // try{
-        //     setSpellCheckLanguage('fr-FR');
-        // }catch(err){
-        //     console.error(err);
-        // }
-        
-        
-        //win.webContents.session.setSpellCheckerLanguages(['fr-FR']);
-
-        // fs.readFile("path/to/file", (error, data) => {
-        //   // Do something with file contents
-      
-        //   // Send result back to renderer process
-        //   //win.webContents.send("fromMain", responseObj);
-        // });
+        menu.getMenuItemById(`lang-${args}`).checked = true;
     });
 
 
@@ -83,7 +67,7 @@ function createWindow() {
         //     nodeIntegration: false,
         //     nodeIntegrationInWorker: false
         //   }
-    });
+    });    
 
     win.webContents.on('context-menu', (event, params) => {
         const menu = new Menu()
@@ -162,7 +146,6 @@ function createWindow() {
             ]
         },
         {
-            id: "spellcheck",
             label: "SpellCheck",
             submenu: [
                 {
@@ -175,6 +158,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-sq",
                     label: "Albanian",
                     type: 'radio',
                     checked: language === 'sq',
@@ -183,6 +167,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-hy",
                     label: "Armenian",
                     type: 'radio',
                     checked: language === 'hy',
@@ -191,6 +176,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-bg",
                     label: "Bulgarian",
                     type: 'radio',
                     checked: language === 'bg',
@@ -199,6 +185,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-hr",
                     label: "Croatian",
                     type: 'radio',
                     checked: language === 'hr',
@@ -207,6 +194,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-cs",
                     label: "Czech",
                     type: 'radio',
                     checked: language === 'cs',
@@ -215,6 +203,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-da",
                     label: "Danish",
                     type: 'radio',
                     checked: language === 'da',
@@ -223,6 +212,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-nl",
                     label: "Dutch",
                     type: 'radio',
                     checked: language === 'nl',
@@ -231,17 +221,19 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-en",
                     label: "English",
                     type: 'radio',
-                    checked: language === 'en-US',
+                    checked: language === 'en',
                     click: function () {
-                        setSpellCheckLanguage('en-US');
+                        setSpellCheckLanguage('en');
 
                         // const possibleLanguages = win.webContents.session.availableSpellCheckerLanguages;
                         // console.warn(possibleLanguages);
                     }
                 },
                 {
+                    id: "lang-et",
                     label: "Estonian",
                     type: 'radio',
                     checked: language === 'et',
@@ -250,15 +242,16 @@ function createWindow() {
                     }
                 },
                 {
-                    id: "lang-fr-FR",
+                    id: "lang-fr",
                     label: "French",
                     type: 'radio',
-                    checked: language === 'fr-FR',
+                    checked: language === 'fr',
                     click: function () {
-                        setSpellCheckLanguage('fr-FR');
+                        setSpellCheckLanguage('fr');
                     }
                 },
                 {
+                    id: "lang-de",
                     label: "German",
                     type: 'radio',
                     checked: language === 'de',
@@ -267,6 +260,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-el",
                     label: "Greek",
                     type: 'radio',
                     checked: language === 'el',
@@ -275,6 +269,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-he",
                     label: "Hebrew",
                     type: 'radio',
                     checked: language === 'he',
@@ -283,6 +278,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-hi",
                     label: "Hindi",
                     type: 'radio',
                     checked: language === 'hi',
@@ -291,6 +287,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-hu",
                     label: "Hungarian",
                     type: 'radio',
                     checked: language === 'hu',
@@ -299,6 +296,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-id",
                     label: "Indonesian",
                     type: 'radio',
                     checked: language === 'id',
@@ -307,14 +305,16 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-it",
                     label: "Italian",
                     type: 'radio',
-                    checked: language === 'it-IT',
+                    checked: language === 'it',
                     click: function () {
-                        setSpellCheckLanguage('it-IT');
+                        setSpellCheckLanguage('it');
                     }
                 },
                 {
+                    id: "lang-ko",
                     label: "Korean",
                     type: 'radio',
                     checked: language === 'ko',
@@ -323,6 +323,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-lv",
                     label: "Latvian",
                     type: 'radio',
                     checked: language === 'lv',
@@ -331,6 +332,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-lt",
                     label: "Lithuanian",
                     type: 'radio',
                     checked: language === 'lt',
@@ -339,6 +341,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-nb",
                     label: "Norwegian",
                     type: 'radio',
                     checked: language === 'nb',
@@ -347,6 +350,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-fa",
                     label: "Persian",
                     type: 'radio',
                     checked: language === 'fa',
@@ -355,6 +359,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-pl",
                     label: "Polish",
                     type: 'radio',
                     checked: language === 'pl',
@@ -363,6 +368,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-pt",
                     label: "Portuguese",
                     type: 'radio',
                     checked: language === 'pt',
@@ -371,6 +377,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-ro",
                     label: "Romanian",
                     type: 'radio',
                     checked: language === 'ro',
@@ -379,6 +386,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-ru",
                     label: "Russian",
                     type: 'radio',
                     checked: language === 'ru',
@@ -387,6 +395,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-sr",
                     label: "Serbian",
                     type: 'radio',
                     checked: language === 'sr',
@@ -395,6 +404,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-sh",
                     label: "Serbo-Croatian",
                     type: 'radio',
                     checked: language === 'sh',
@@ -403,14 +413,16 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-sk",
                     label: "Slovak",
                     type: 'radio',
                     checked: language === 'sk',
                     click: function () {
                         setSpellCheckLanguage('sk');
                     }
-                },
+                },                
                 {
+                    id: "lang-sl",
                     label: "Slovenian",
                     type: 'radio',
                     checked: language === 'sl',
@@ -419,6 +431,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-es",
                     label: "Spanish",
                     type: 'radio',
                     checked: language === 'es',
@@ -427,6 +440,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-sv",
                     label: "Swedish",
                     type: 'radio',
                     checked: language === 'sv',
@@ -435,6 +449,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-ta",
                     label: "Tamil",
                     type: 'radio',
                     checked: language === 'ta',
@@ -443,6 +458,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-tr",
                     label: "Turkish",
                     type: 'radio',
                     checked: language === 'tr',
@@ -451,6 +467,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-uk",
                     label: "Ukrainian",
                     type: 'radio',
                     checked: language === 'uk',
@@ -459,6 +476,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-vi",
                     label: "Vietnamese",
                     type: 'radio',
                     checked: language === 'vi',
