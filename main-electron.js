@@ -1,5 +1,5 @@
 const { join } = require("path");
-const { app, Menu, MenuItem, BrowserWindow, shell } = require("electron");
+const { app, Menu, MenuItem, BrowserWindow, shell, ipcMain } = require("electron");
 const settings = require('electron-settings');
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -7,6 +7,9 @@ const settings = require('electron-settings');
 let win;
 const globalAny = global;
 let language = settings.getSync('spellcheckLanguage') || 'en-US';
+
+console.warn(`=====> LANG: ${language}`);
+
 let menuAutohide = settings.getSync('menuAutohide') || false;
 
 if (process.env.NODE_ENV !== 'development') {
@@ -19,7 +22,41 @@ function setSpellCheckLanguage(lang) {
     language = lang;
 }
 
+let menu;
+
 function createWindow() {
+    ipcMain.on('ping', (event, order) => {
+        console.warn('PING');
+        console.warn(event);
+        console.warn(order);
+    });
+
+    ipcMain.on("toMain", (event, args) => {
+        console.warn('toMain');
+        console.warn(args);
+
+        //menu.getApplicationMenu().getMenuItemById('lang-fr-FR').enabled = true;
+        setSpellCheckLanguage(args);
+        menu.getMenuItemById('lang-fr-FR').enabled = true;
+
+        // try{
+        //     setSpellCheckLanguage('fr-FR');
+        // }catch(err){
+        //     console.error(err);
+        // }
+        
+        
+        //win.webContents.session.setSpellCheckerLanguages(['fr-FR']);
+
+        // fs.readFile("path/to/file", (error, data) => {
+        //   // Do something with file contents
+      
+        //   // Send result back to renderer process
+        //   //win.webContents.send("fromMain", responseObj);
+        // });
+    });
+
+
     // Set icon
     let icon = join(globalAny.__static, '/png/512x512.png');
     if (process.platform === "win32") {
@@ -35,7 +72,11 @@ function createWindow() {
         backgroundColor: "#131925",
         useContentSize: true,
         webPreferences: {
-            spellcheck: language !== 'off'
+            spellcheck: language !== 'off',
+            nodeIntegration: false, // is default value after Electron v5
+            contextIsolation: true, // protect against prototype pollution
+            enableRemoteModule: false, // turn off remote
+            preload: join(__dirname, "preload.js") // use a preload script
         }
         // webPreferences: {
         //     contextIsolation: true,
@@ -81,7 +122,8 @@ function createWindow() {
 
     applyAutohideSettings();
 
-    const sengiUrl = "https://sengi.nicolas-constant.com";
+    //const sengiUrl = "https://sengi.nicolas-constant.com";
+    const sengiUrl = "https://ec18-107-159-22-16.ngrok-free.app";
     win.loadURL(sengiUrl);
 
     const template = [
@@ -120,6 +162,7 @@ function createWindow() {
             ]
         },
         {
+            id: "spellcheck",
             label: "SpellCheck",
             submenu: [
                 {
@@ -207,6 +250,7 @@ function createWindow() {
                     }
                 },
                 {
+                    id: "lang-fr-FR",
                     label: "French",
                     type: 'radio',
                     checked: language === 'fr-FR',
@@ -448,8 +492,10 @@ function createWindow() {
         }
     ];
 
-    const menu = Menu.buildFromTemplate(template);
+    menu = Menu.buildFromTemplate(template);
     win.setMenu(menu);
+    //Menu.setApplicationMenu(menu);
+
 
     // Check if we are on a MAC
     if (process.platform === "darwin") {
