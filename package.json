@@ -1,6 +1,6 @@
 {
     "name": "sengi",
-    "version": "1.6.3",
+    "version": "1.6.5",
     "license": "AGPL-3.0-or-later",
     "main": "main-electron.js",
     "description": "The Electron wrapper for Sengi",
@@ -35,6 +35,9 @@
         "directories": {
             "output": "release"
         },
+        "extraResources": [
+            "preload.js"
+        ],
         "files": [
             "dist/",
             "node_modules/",
