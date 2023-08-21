@@ -1,14 +1,34 @@
 const { join } = require("path");
 const { app, Menu, MenuItem, BrowserWindow, shell, ipcMain } = require("electron");
 const settings = require('electron-settings');
+const LanguageDetect = require('languagedetect');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 const globalAny = global;
 let language = settings.getSync('spellcheckLanguage') || 'en';
-
+const lngDetector = new LanguageDetect();
+lngDetector.setLanguageType("iso2");
 let menuAutohide = settings.getSync('menuAutohide') || false;
+
+// console.warn('This is a test.')
+// console.warn(lngDetector.detect('This is a test.', 2));
+// console.warn()
+// console.warn('Ceci est un test.')
+// console.warn(lngDetector.detect('Ceci est un test.', 2));
+// console.warn()
+// console.warn('Das')
+// console.warn(lngDetector.detect('Das', 2));
+// console.warn()
+// console.warn('Das ist')
+// console.warn(lngDetector.detect('Das ist', 2));
+// console.warn()
+// console.warn('Das ist eine')
+// console.warn(lngDetector.detect('Das ist eine', 2));
+// console.warn()
+// console.warn('Das ist eine test.')
+// console.warn(lngDetector.detect('Das ist eine test.', 2));
 
 if (process.env.NODE_ENV !== 'development') {
     globalAny.__static = require('path').join(__dirname, '/assets/icons').replace(/\\/g, '\\\\');
@@ -33,6 +53,12 @@ function createWindow() {
 
         setSpellCheckLanguage(args);
         menu.getMenuItemById(`lang-${args}`).checked = true;
+    });
+
+    ipcMain.on("detectLang", (event, args) => {
+        console.warn(args);
+        let detected = lngDetector.detect(args, 2);
+        win.webContents.send("detectedLang", detected);
     });
 
     // Set icon
@@ -102,7 +128,8 @@ function createWindow() {
 
     applyAutohideSettings();
 
-    const sengiUrl = "https://sengi.nicolas-constant.com";    
+    const sengiUrl = "https://sengi.nicolas-constant.com";
+    //const sengiUrl = "https://11dd-107-159-22-16.ngrok-free.app";
     win.loadURL(sengiUrl);
 
     const template = [
