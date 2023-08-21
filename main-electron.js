@@ -12,24 +12,6 @@ const lngDetector = new LanguageDetect();
 lngDetector.setLanguageType("iso2");
 let menuAutohide = settings.getSync('menuAutohide') || false;
 
-// console.warn('This is a test.')
-// console.warn(lngDetector.detect('This is a test.', 2));
-// console.warn()
-// console.warn('Ceci est un test.')
-// console.warn(lngDetector.detect('Ceci est un test.', 2));
-// console.warn()
-// console.warn('Das')
-// console.warn(lngDetector.detect('Das', 2));
-// console.warn()
-// console.warn('Das ist')
-// console.warn(lngDetector.detect('Das ist', 2));
-// console.warn()
-// console.warn('Das ist eine')
-// console.warn(lngDetector.detect('Das ist eine', 2));
-// console.warn()
-// console.warn('Das ist eine test.')
-// console.warn(lngDetector.detect('Das ist eine test.', 2));
-
 if (process.env.NODE_ENV !== 'development') {
     globalAny.__static = require('path').join(__dirname, '/assets/icons').replace(/\\/g, '\\\\');
 }
