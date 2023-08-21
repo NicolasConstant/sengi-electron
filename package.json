@@ -1,6 +1,6 @@
 {
     "name": "sengi",
-    "version": "1.6.5",
+    "version": "1.7.0",
     "license": "AGPL-3.0-or-later",
     "main": "main-electron.js",
     "description": "The Electron wrapper for Sengi",
@@ -20,8 +20,9 @@
         "release": "electron-builder --mac --windows --linux --publish always"
     },
     "private": true,
-    "dependencies": {       
-        "electron-settings": "^4.0.2"     
+    "dependencies": {
+        "electron-settings": "^4.0.2",
+        "languagedetect": "^2.0.0"
     },
     "devDependencies": {
         "electron": "^23.1.3",
